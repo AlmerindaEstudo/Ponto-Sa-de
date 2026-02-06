@@ -1,0 +1,185 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #f6f8fb;
+}
+
+/* Header */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+}
+.icon-box {
+  width: 50px;
+  height:50px;
+  background: #67a1f2;      /* azul claro */
+  border-radius: 8px;       /* cantos suaves */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-box i {
+  color: #e3eeff;           /* azul Bootstrap */
+  font-size: 26px;
+}
+.icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;              /* retângulo com cantos suaves */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;             /* centraliza no card */
+}
+/* vermelho */
+.icon-box.red {
+  background: #fde2e2;             /* vermelho claro */
+}
+
+.icon-box.red i {
+  color: #dc3545;                  /* vermelho bootstrap */
+}
+.icon-box.blue {
+  background: #e5eaf6;             /* vermelho claro */
+}
+
+.icon-box.blue i {
+  color: #0d5dd4;                  /* vermelho bootstrap */
+}
+.icon-box.orange {
+  background: #ffe9ce;             /* vermelho claro */
+}
+
+.icon-box.orange i {
+  color: #f09347;                  /* vermelho bootstrap */
+}
+.logo {
+  display: flex;
+  gap: 10px;
+}
+
+.logo h1 {
+  font-size: 20px;
+}
+
+.logo small {
+  color: #777;
+}
+.map-icon-hospital,
+.map-icon-posto,
+.map-icon-upa {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.map-icon-hospital {
+  background-color: #dc3545; /* vermelho */
+}
+
+.map-icon-posto {
+  background-color: #0d6efd; /* azul */
+}
+
+.map-icon-upa {
+  background-color: #fd7e14; /* laranja */
+}
+
+.map-icon-hospital i,
+.map-icon-posto i,
+.map-icon-upa i {
+  color: #ffffff;
+  font-size: 24px;
+}
+
+
+.user-btn {
+  background: #00a8e8;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Cards */
+.stats {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  flex: 1;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,.05);
+}
+
+.card h2 {
+  font-size: 28px;
+}
+
+.card p {
+  color: #666;
+}
+
+.icon {
+  width: 42px;
+  height: 42px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.red { background: #ffe1e1; }
+.blue { background: #e1ecff; }
+.orange { background: #ffe8cc; }
+
+/* Filtros */
+.filters {
+  display: flex;
+  gap: 10px;
+  padding: 0 20px 10px;
+}
+
+.filters button {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.filters .active {
+  background: #111827;
+  color: white;
+}
+
+/* Mapa */
+#map {
+  height: calc(100vh - 300px);
+  margin: 0 20px 20px;
+  border-radius: 12px;
+  overflow: hidden;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>SaúdeMap</title>
+
+  <!-- Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <link rel="stylesheet" href="style.css">
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+/>
+</head>
+<body>
+
+<header class="top-bar">
+  <div class="logo">
+    <span class="icon-box">
+  <i class="bi bi-geo-alt-fill"></i>
+</span>
+    <div>
+      <h1>Ponto Saúde</h1>
+      <small>Encontre serviços de saúde</small>
+    </div>
+  </div>
+
+  <button class="user-btn">Usuário Colaborador</button>
+</header>
+
+<section class="stats">
+  <div class="card">
+    <div class="icon-box red">
+      <i class="bi bi-hospital"></i>
+    </div>
+    <h2>1</h2>
+    <p>Hospitais</p>
+  </div>
+
+
+  <div class="card">
+    <div class="icon-box blue">
+    <i class="bi bi-buildings"></i>
+    </div>
+    <h2>5</h2>
+    <p>Postos</p>
+  </div>
+
+  <div class="card">
+     <div class="icon-box orange">
+    <i class="bi bi-building"></i>
+    </div>
+    <h2>1</h2>
+    <p>UPAs</p>
+  </div>
+</section>
+
+<section class="filters">
+  <button class="active"><i class="bi bi-geo-alt"></i> Todos</button>
+  <button>
+  <i class="bi bi-hospital"></i>
+  Hospitais
+</button>
+  <button><i class="bi bi-buildings"></i> Postos</button>
+  <button><i class="bi bi-building"></i> UPAs</button>
+  <button><i class="bi bi-send"></i> Localização Atual</button>
+</section>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
