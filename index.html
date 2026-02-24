@@ -12,64 +12,64 @@
 
   <link rel="stylesheet" href="style.css">
   <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-/>
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+  />
 </head>
 <body>
 
-<header class="top-bar">
-  <div class="logo">
-    <span class="icon-box">
-  <i class="bi bi-geo-alt-fill"></i>
-</span>
-    <div>
-      <h1>Ponto Saúde</h1>
-      <small>Encontre serviços de saúde</small>
+  <header class="top-bar">
+    <div class="logo">
+      <span class="icon-box">
+    <i class="bi bi-geo-alt-fill"></i>
+  </span>
+      <div>
+        <h1>Ponto Saúde</h1>
+        <small>Encontre serviços de saúde</small>
+      </div>
     </div>
-  </div>
 
-  <button class="user-btn">Usuário Colaborador</button>
-</header>
+    <button class="user-btn">Usuário Colaborador</button>
+  </header>
 
-<section class="stats">
-  <div class="card">
-    <div class="icon-box red">
-      <i class="bi bi-hospital"></i>
+  <section class="stats">
+    <div class="card">
+      <div class="icon-box red">
+        <i class="bi bi-hospital"></i>
+      </div>
+      <h2 id="count-hospital">0</h2>
+      <p>Hospitais</p>
     </div>
-    <h2 id="count-hospital">0</h2>
-    <p>Hospitais</p>
-  </div>
 
-  <div class="card">
-    <div class="icon-box blue">
-    <i class="bi bi-buildings"></i>
+    <div class="card">
+      <div class="icon-box blue">
+      <i class="bi bi-buildings"></i>
+      </div>
+      <h2 id="count-posto">0</h2>
+      <p>Postos</p>
     </div>
-    <h2 id="count-posto">0</h2>
-    <p>Postos</p>
-  </div>
 
-  <div class="card">
-     <div class="icon-box orange">
-    <i class="bi bi-building"></i>
+    <div class="card">
+      <div class="icon-box orange">
+      <i class="bi bi-building"></i>
+      </div>
+      <h2 id="count-upa">0</h2>
+      <p>UPAs</p>
     </div>
-    <h2 id="count-upa">0</h2>
-    <p>UPAs</p>
-  </div>
-</section>
+  </section>
 
-<section class="filters">
-  <button class="active" data-filter="todos"><i class="bi bi-geo-alt"></i> Todos</button>
-  <button data-filter="hospital"><i class="bi bi-hospital"></i> Hospitais</button>
-  <button data-filter="posto"><i class="bi bi-buildings"></i> Postos</button>
-  <button data-filter="upa"><i class="bi bi-building"></i> UPAs</button>
-  
-  <button id="btn-location"><i class="bi bi-send"></i> Localização Atual</button>
-</section>
+  <section class="filters">
+    <button class="active" data-filter="todos"><i class="bi bi-geo-alt"></i> Todos</button>
+    <button data-filter="hospital"><i class="bi bi-hospital"></i> Hospitais</button>
+    <button data-filter="posto"><i class="bi bi-buildings"></i> Postos</button>
+    <button data-filter="upa"><i class="bi bi-building"></i> UPAs</button>
+    
+    <button id="btn-location"><i class="bi bi-send"></i> Localização Atual</button>
+  </section>
 
-<div id="map"></div>
+  <div id="map"></div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="script.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
