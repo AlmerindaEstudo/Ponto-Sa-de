@@ -67,6 +67,22 @@
     <button id="btn-location"><i class="bi bi-send"></i> Localização Atual</button>
   </section>
 
+  <div class="button-locais">
+    <button id="btn-toggle-list" class="user-btn"><i class="bi bi-list-ul"></i> Ver Locais Próximos</button>
+  </div>
+
+  <div id="overlay" class="overlay"></div>
+
+  <aside id="sidebar-locais" class="sidebar">
+    <div class="sidebar-header">
+      <h3>Locais Próximos</h3>
+      <button id="btn-close-list"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <ul id="lista-locais">
+      <li style="padding: 20px; color: #777; text-align: center;">Use sua localização para ver os locais próximos.</li>
+    </ul>
+  </aside>
+
   <div id="map"></div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
