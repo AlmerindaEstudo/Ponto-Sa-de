@@ -183,3 +183,108 @@ body {
   border-radius: 12px;
   overflow: hidden;
 }
+
+/* --- SIDEBAR DE LOCAIS --- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -400px; /* Escondida fora da tela por padrão */
+  width: 100%;
+  max-width: 380px;
+  height: 100vh;
+  background: white;
+  box-shadow: -4px 0 15px rgba(0,0,0,0.1);
+  transition: right 0.3s ease-in-out;
+  z-index: 9999; /* Fica acima do mapa do Leaflet */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Classe que o JS vai adicionar para mostrar a barra */
+.sidebar.open {
+  right: 0; 
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  background: #f6f8fb;
+}
+
+.sidebar-header button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+#lista-locais {
+  list-style: none;
+  overflow-y: auto; /* Permite rolagem se tiver muitos itens */
+  flex: 1;
+}
+
+.local-item {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.local-item:hover {
+  background: #f0f4f8;
+}
+
+.local-item h4 {
+  margin-bottom: 6px;
+  font-size: 16px;
+  color: #111827;
+}
+
+.local-item p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.distancia-badge {
+  color: #0d6efd;
+  font-weight: 600;
+}
+
+/* Estado ativo do botão da lista */
+.user-btn.active-btn {
+  background: #111827; /* Cor escura do botão quando clicado */
+}
+
+/* --- OVERLAY (Fundo Sombreado) --- */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998; /* Fica atrás da sidebar (que é 9999) e acima do mapa */
+  
+  /* Escondido por padrão */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Quando o JS adicionar essa classe, a tela escurece */
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.button-locais {
+  padding: 0 20px 10px;
+}
