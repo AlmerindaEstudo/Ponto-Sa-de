@@ -288,3 +288,134 @@ body {
 .button-locais {
   padding: 0 20px 10px;
 }
+
+/* --- MODAL DE LOGIN --- */
+.login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.85); /* Fundo claro e embaçado */
+  backdrop-filter: blur(5px);
+  z-index: 10000; /* Fica acima de TUDO na tela */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.login-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.login-modal {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  position: relative;
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+}
+
+.login-overlay.open .login-modal {
+  transform: translateY(0);
+}
+
+.btn-close-login {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.login-header h2 {
+  font-size: 24px;
+  color: #111827;
+}
+
+.login-header p {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Campos do formulário */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #0d6efd;
+}
+
+/* Classes de Validação Visual */
+.input-group input.input-error {
+  border-color: #dc3545;
+  background-color: #fff8f8;
+}
+
+.error-msg {
+  display: block;
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  min-height: 14px; /* Evita que o layout pule ao aparecer o texto */
+}
+
+.mensagem-servidor {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  min-height: 20px;
+}
+.msg-success { color: #198754; }
+.msg-error { color: #dc3545; }
+
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: #111827;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-submit:hover { background: #1f2937; }
