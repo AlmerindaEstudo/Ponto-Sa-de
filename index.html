@@ -29,7 +29,7 @@
       </div>
     </div>
 
-    <button class="user-btn">Usuário Colaborador</button>
+    <button id="btn-login-colaborador" class="user-btn">Usuário Colaborador</button>
   </header>
 
   <section class="stats">
@@ -84,6 +84,40 @@
   </aside>
 
   <div id="map"></div>
+
+  <!-- USUÁRIO COLABORADOR - MODAL DE LOGIN -->
+
+  <div id="login-overlay" class="login-overlay">
+  <div class="login-modal">
+    <button id="btn-close-login" class="btn-close-login"><i class="bi bi-x-lg"></i></button>
+    
+    <div class="login-header">
+      <div class="icon-box blue" style="margin: 0 auto 15px;">
+        <i class="bi bi-person-badge-fill"></i>
+      </div>
+      <h2>Portal do Colaborador</h2>
+      <p>Acesse para gerenciar os locais de saúde.</p>
+    </div>
+
+    <form id="form-login">
+      <div class="input-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" placeholder="exemplo@saudemap.com">
+        <span class="error-msg" id="erro-email"></span>
+      </div>
+
+      <div class="input-group">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" placeholder="••••••••">
+        <span class="error-msg" id="erro-senha"></span>
+      </div>
+
+      <div id="mensagem-servidor" class="mensagem-servidor"></div>
+
+      <button type="submit" class="btn-submit">Entrar</button>
+    </form>
+  </div>
+</div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="script.js"></script>
