@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmácia Popular</title>
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<!-- CSS separado -->
+<link rel="stylesheet" href="farmacia.css">
+</head>
+<body>
+
+<div class="sidepanel">
+    <h1>Farmácia Popular 2 de Julho</h1>
+
+    <!-- Card único com informações -->
+    <div class="card">
+        <div class="card-item">
+            <i class="bi bi-telephone-fill"></i>
+            <span>Telefone: (77) 99999-9999</span>
+        </div>
+        <div class="card-item">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span>Endereço: Rua das Flores, 123, Centro, Vitória da Conquista - BA</span>
+        </div>
+       
+        <div class="status">
+            <span class="ok"><i class="bi bi-check-circle-fill"></i> Aberto</span>
+        </div>
+    </div>
+   
+   <h2> Selecione a condição de saúde</h2>
+    <h1><i class="bi bi-capsule-pill"></i> Medicamentos</h1>
+    <select id="doencaSelect" onchange="mostrarMedicamentos()">
+        <option value="">Escolha uma opção</option>
+        <option value="diabetes">Diabetes</option>
+        <option value="hipertensao">Hipertensão</option>
+        <option value="asma">Asma</option>
+        <option value="colesterol">Colesterol</option>
+        <option value="parkinson">Parkinson</option>
+        <option value="rinite">Rinite</option>
+        <option value="glaucoma">Glaucoma</option>
+        <option value="osteoporose">Osteoporose</option>
+        <option value="anticoncepcao">Anticoncepção</option>
+    </select>
+    <div id="resultado" class="resultado"></div>
+     <h2> Selecione um Produto</h2>
+    <h1><i class="bi bi-bag-dash"></i> Produtos Gratuitos</h1>
+  
+    <select id="produtoSelect" onchange="mostrarProdutos()">
+        <option value="">Escolha uma opção</option>
+        <option value="fralda">Fraldas Geriátricas</option>
+        <option value="absorvente">Absorvente</option>
+        <option value="formula">Fórmula Infantil Especial</option>
+    </select>
+    <div id="resultadoProduto" class="resultado"></div>
+</div>
+
+<script>
+const dados = {
+    diabetes: [{ nome: "Metformina 500mg", status: true }, { nome: "Insulina NPH", status: false }],
+    hipertensao: [{ nome: "Losartana 50mg", status: true }],
+    asma: [{ nome: "Salbutamol Spray", status: true }],
+    colesterol: [{ nome: "Sinvastatina 20mg", status: true }],
+    parkinson: [{ nome: "Levodopa", status: true }],
+    rinite: [{ nome: "Loratadina", status: true }],
+    glaucoma: [{ nome: "Timolol Colírio", status: false }],
+    osteoporose: [{ nome: "Alendronato", status: true }],
+    anticoncepcao: [{ nome: "Etinilestradiol + Levonorgestrel", status: true }]
+};
+
+const produtos = {
+    fralda: { nome: "Fraldas Geriátricas", status: true, requisitos: ["Ter 60 anos ou mais"] },
+    absorvente: { nome: "Absorvente", status: true, requisitos: ["Idade entre 10 e 49 anos", "Inscrição no Cadastro Único (CadÚnico)", "Renda familiar de até R$ 218 por pessoa OU", "Estudante da rede pública em situação de baixa renda (até meio salário mínimo por pessoa) OU", "Estar em situação de rua"] },
+    formula: { nome: "Fórmula Infantil Especial", status: true, requisitos: ["Bebês e crianças de 0 a 2 anos (até 24 meses)", "Diagnóstico de APLV ou intolerâncias graves"] }
+};
+
+function mostrarProdutos() {
+    const select = document.getElementById("produtoSelect").value;
+    const resultado = document.getElementById("resultadoProduto");
+    resultado.innerHTML = "";
+    if (!select || !produtos[select]) return;
+    const produto = produtos[select];
+    resultado.innerHTML = `<div class="card"><h3>${produto.nome}</h3><p class="ok"><i class="bi bi-check-circle-fill"></i> Disponível</p><strong>Requisitos:</strong><ul>${produto.requisitos.map(req => `<li>${req}</li>`).join("")}</ul></div>`;
+}
+
+function mostrarMedicamentos() {
+    const select = document.getElementById("doencaSelect").value;
+    const resultado = document.getElementById("resultado");
+    resultado.innerHTML = "";
+    if (!select || !dados[select]) return;
+    dados[select].forEach(med => {
+        resultado.innerHTML += `<div class="card"><span><i class="bi bi-capsule"></i> ${med.nome}</span><span class="${med.status ? 'ok' : 'off'}"><i class="bi ${med.status ? 'bi-check-circle-fill' : 'bi-x-circle-fill'}"></i>${med.status ? 'Disponível' : 'Em falta'}</span></div>`;
+    });
+}
+</script>
+</body>
+</html>

@@ -41,6 +41,17 @@ const upaIcon = L.divIcon({
     </div>
   `
 });
+const farmaciaIcon = L.divIcon({
+  className: '',
+  iconSize: [54, 54],
+  iconAnchor: [27, 27],
+  popupAnchor: [0, -27],
+  html: `
+    <div class="map-icon-farmacia">
+      <i class="bi bi-shop-window"></i>
+    </div>
+  `
+});
 function offsetLatLng(lat, lng, offset = 0.00015) {
   return [
     lat + (Math.random() - 0.5) * offset,
@@ -56,7 +67,8 @@ const locaisDeSaude = [
   { tipo: 'posto', nome: 'Posto de Saúde', lat: -15.2490134, lng: -40.2680764 },
   { tipo: 'posto', nome: 'Posto Municipal', lat: -15.255874, lng: -40.2419739 }, 
   { tipo: 'posto', nome: 'Posto Municipal', lat: -15.244874, lng: -40.2279739 }, 
-  { tipo: 'upa', nome: 'UPA 24h', lat: -15.2541251, lng: -40.2387767 }
+  { tipo: 'upa', nome: 'UPA 24h', lat: -15.2541251, lng: -40.2387767 },
+  {tipo:'farmacia',nome:'Farmácia Julho',lat:-15.2500000,lng:-40.228900}
 ];
 
 // 2. Array para guardar os marcadores reais do Leaflet
@@ -69,6 +81,7 @@ locaisDeSaude.forEach(local => {
   if (local.tipo === 'hospital') iconeEscolhido = hospitalIcon;
   else if (local.tipo === 'posto') iconeEscolhido = postoIcon;
   else if (local.tipo === 'upa') iconeEscolhido = upaIcon;
+   else if (local.tipo === 'farmacia') iconeEscolhido = farmaciaIcon;
 
   const marker = L.marker([local.lat, local.lng], { icon: iconeEscolhido })
     .bindPopup(local.nome)
@@ -84,18 +97,21 @@ function atualizarContadoresTotais() {
   let contagemHospital = 0;
   let contagemPosto = 0;
   let contagemUpa = 0;
+  let contagemFarmacia=0;
 
   // Percorre a lista de locais e soma as quantidades totais
   locaisDeSaude.forEach(local => {
     if (local.tipo === 'hospital') contagemHospital++;
     else if (local.tipo === 'posto') contagemPosto++;
     else if (local.tipo === 'upa') contagemUpa++;
+    else if (local.tipo === 'farmacia') contagemFarmacia++;
   });
 
   // Atualiza os números no HTML
   document.getElementById('count-hospital').innerText = contagemHospital;
   document.getElementById('count-posto').innerText = contagemPosto;
   document.getElementById('count-upa').innerText = contagemUpa;
+  document.getElementById('count-farmacia').innerText = contagemFarmacia;
 }
 
 // Chama a função quando a página carrega
