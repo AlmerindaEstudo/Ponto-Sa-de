@@ -1,4 +1,4 @@
-// Inicializa o mapa
+// Inicializa o Mapa
 const map = L.map('map').setView([-15.2508147, -40.2477774], 13);
 
 // OpenStreetMap
