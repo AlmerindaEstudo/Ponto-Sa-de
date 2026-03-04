@@ -117,6 +117,16 @@ body {
   cursor: pointer;
 }
 
+.colab-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logout-btn {
+  background: #6b7280;
+}
+
 /* Cards */
 .stats {
   display: flex;
@@ -222,12 +232,6 @@ body {
   color: #333;
 }
 
-#lista-locais {
-  list-style: none;
-  overflow-y: auto; /* Permite rolagem se tiver muitos itens */
-  flex: 1;
-}
-
 .local-item {
   padding: 16px 20px;
   border-bottom: 1px solid #eee;
@@ -287,6 +291,19 @@ body {
 
 .button-locais {
   padding: 0 20px 10px;
+}
+
+.modo-sidebar {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+#lista-locais {
+  list-style: none;
+  overflow-y: auto; /* Permite rolagem se tiver muitos itens */
+  flex: 1;
 }
 
 /* --- MODAL DE LOGIN --- */
@@ -419,3 +436,283 @@ body {
 }
 
 .btn-submit:hover { background: #1f2937; }
+
+/* --- DETALHES DO LOCAL --- */
+.detalhes-container {
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+.local-header {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  background: #f6f8fb;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.local-header .icon-box {
+  width: 50px;
+  height: 50px;
+  margin: 0;
+}
+
+.local-header-info h2 {
+  font-size: 18px;
+  color: #111827;
+  margin: 0 0 4px 0;
+}
+
+.local-header-info p {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+.info-section {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.info-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-section h3 i {
+  color: #667;
+  font-size: 16px;
+}
+
+.info-item {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.medico-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.medico-card:last-child {
+  margin-bottom: 0;
+}
+
+.medico-nome {
+  font-weight: 600;
+  color: #111827;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.medico-info {
+  color: #666;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.vacina-item {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vacina-item:last-child {
+  margin-bottom: 0;
+}
+
+.vacina-nome {
+  font-weight: 600;
+  color: #111827;
+  font-size: 14px;
+}
+
+.vacina-badge {
+  background: #111827;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.edit-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-editar-local {
+  border: none;
+  border-radius: 8px;
+  background: #111827;
+  color: #fff;
+  padding: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-editar-local:disabled {
+  background: #b9bec8;
+  cursor: not-allowed;
+}
+
+.edit-hint {
+  margin: 0;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.edit-feedback {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.edit-feedback.success {
+  background: #e8f7ee;
+  color: #1f7a42;
+  border: 1px solid #b9e6c9;
+}
+
+.form-editar-local {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-editar-local label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-editar-local input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 9px 10px;
+  font-size: 13px;
+  outline: none;
+}
+
+.form-editar-local input:focus {
+  border-color: #111827;
+}
+
+.edit-coords {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.btn-editar-salvar,
+.btn-editar-cancelar {
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  flex: 1;
+}
+
+.btn-editar-salvar {
+  background: #198754;
+  color: #fff;
+}
+
+.btn-editar-cancelar {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.edit-lista-itens {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.medico-edit-row,
+.vacina-edit-row {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #f9fafb;
+}
+
+.btn-adicionar-item {
+  border: 1px dashed #9ca3af;
+  border-radius: 8px;
+  background: #fff;
+  color: #111827;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-remover-item {
+  border: none;
+  border-radius: 6px;
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 6px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.edit-vacina-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #374151;
+}

@@ -29,7 +29,10 @@
       </div>
     </div>
 
-    <button id="btn-login-colaborador" class="user-btn">Usuário Colaborador</button>
+    <div class="colab-actions">
+      <button id="btn-login-colaborador" class="user-btn">Usuário Colaborador</button>
+      <button id="btn-logout-colaborador" class="user-btn logout-btn" style="display: none;"><i class="bi bi-box-arrow-right"></i> Sair</button>
+    </div>
   </header>
 
   <section class="stats">
@@ -75,12 +78,23 @@
 
   <aside id="sidebar-locais" class="sidebar">
     <div class="sidebar-header">
-      <h3>Locais Próximos</h3>
+      <h3 id="sidebar-titulo">Locais Próximos</h3>
       <button id="btn-close-list"><i class="bi bi-x-lg"></i></button>
     </div>
-    <ul id="lista-locais">
-      <li style="padding: 20px; color: #777; text-align: center;">Use sua localização para ver os locais próximos.</li>
-    </ul>
+    
+    <!-- Modo: Lista de Locais Próximos -->
+    <div id="modo-lista" class="modo-sidebar">
+      <ul id="lista-locais">
+        <li style="padding: 20px; color: #777; text-align: center;">Use sua localização para ver os locais próximos.</li>
+      </ul>
+    </div>
+
+    <!-- Modo: Detalhes do Local Selecionado -->
+    <div id="modo-detalhes" class="modo-sidebar" style="display: none;">
+      <div id="detalhes-local" class="detalhes-container">
+        <!-- Será preenchido dinamicamente pelo JS -->
+      </div>
+    </div>
   </aside>
 
   <div id="map"></div>
