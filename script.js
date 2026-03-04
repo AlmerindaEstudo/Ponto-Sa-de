@@ -6,41 +6,33 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap'
 }).addTo(map);
 
-const hospitalIcon = L.divIcon({
-  className: '',
-  iconSize: [54, 54],
-  iconAnchor: [27, 27],
-  popupAnchor: [0, -27],
-  html: `
-    <div class="map-icon-hospital">
-      <i class="bi bi-hospital"></i>
-    </div>
-  `
-});
+// Função dinâmica para gerar os ícones do mapa com ou sem destaque de edição
+function gerarIconeMarcador(tipo, isEditable = false) {
+  let iconClass = '';
+  let iconBi = '';
 
-const postoIcon = L.divIcon({
-  className: '',
-  iconSize: [54, 54],
-  iconAnchor: [27, 27],
-  popupAnchor: [0, -27],
-  html: `
-    <div class="map-icon-posto">
-      <i class="bi bi-buildings"></i>
-    </div>
-  `
-});
+  if (tipo === 'hospital') { iconClass = 'map-icon-hospital'; iconBi = 'bi-hospital'; }
+  else if (tipo === 'posto') { iconClass = 'map-icon-posto'; iconBi = 'bi-buildings'; }
+  else if (tipo === 'upa') { iconClass = 'map-icon-upa'; iconBi = 'bi-building'; }
 
-const upaIcon = L.divIcon({
-  className: '',
-  iconSize: [54, 54],
-  iconAnchor: [27, 27],
-  popupAnchor: [0, -27],
-  html: `
-    <div class="map-icon-upa">
-      <i class="bi bi-building"></i>
-    </div>
-  `
-});
+  // Se for editável, adiciona as classes que criamos no CSS (anel amarelo e estrela)
+  const extraClass = isEditable ? ' marker-editable-ring' : '';
+  const starBadge = isEditable ? '<div class="marker-star-badge"><i class="bi bi-star-fill"></i></div>' : '';
+
+  return L.divIcon({
+    className: '',
+    iconSize: [60, 60],
+    iconAnchor: [30, 30],
+    popupAnchor: [0, -30],
+    html: `
+      <div class="${iconClass}${extraClass}" style="position: relative;">
+        ${starBadge}
+        <i class="bi ${iconBi}"></i>
+      </div>
+    `
+  });
+}
+
 function offsetLatLng(lat, lng, offset = 0.00015) {
   return [
     lat + (Math.random() - 0.5) * offset,
@@ -342,21 +334,28 @@ const locaisDeSaude = carregarLocaisPersistidos(removerDuplicidadesLocais(locais
 
 // 2. Array para guardar os marcadores reais do Leaflet
 const marcadoresNoMapa = [];
-let colaboradorLogado = false;
+let usuarioLogado = null; // Agora guarda o objeto do usuário logado
 let localDetalheAtualId = null;
 
-const credenciaisColaborador = {
-  email: 'colaborador@pontosaude.com',
-  senha: 'colab123'
-};
+// Mock simulando as tabelas do Banco de Dados Django
+const listaColaboradores = [
+  {
+    nome: 'João (Hospital Cristo Redentor)',
+    email: 'joao@saudemap.com',
+    senha: 'colab123',
+    localVinculadoId: 1 // Este ID corresponde ao Hospital Cristo Redentor no seu array base
+  },
+  {
+    nome: 'Maria (UPA 24h)',
+    email: 'maria@saudemap.com',
+    senha: 'colab123',
+    localVinculadoId: 4 // Este ID corresponde à UPA 24 Horas
+  }
+];
 
 // 3. Renderiza os marcadores
 locaisDeSaude.forEach(local => {
-  let iconeEscolhido;
-  
-  if (local.tipo === 'hospital') iconeEscolhido = hospitalIcon;
-  else if (local.tipo === 'posto') iconeEscolhido = postoIcon;
-  else if (local.tipo === 'upa') iconeEscolhido = upaIcon;
+  const iconeEscolhido = gerarIconeMarcador(local.tipo, false);
 
   const marker = L.marker([local.lat, local.lng], { icon: iconeEscolhido })
     .bindPopup(local.nome)
@@ -437,7 +436,7 @@ function linhaVacinaHtml(vacina = { nome: '', disponvel: true }) {
   `;
 }
 
-function abrirDetalhesLocal(local) {
+function abrirDetalhesLocal(local, forcarAbertura = true) {
   const tipoBadge = obterTipoBadge(local.tipo);
   const detalhesContainer = document.getElementById('detalhes-local');
   localDetalheAtualId = local.id;
@@ -507,15 +506,18 @@ function abrirDetalhesLocal(local) {
     `;
   });
 
-  html += `
-    </div>
+  // Regra: Logado E ID do local do usuário for igual ao ID do local do card
+   const podeEditar = usuarioLogado !== null && usuarioLogado.localVinculadoId === local.id;
 
-    ${colaboradorLogado ? `
-    <div class="info-section edit-section">
-      <button id="btn-editar-local" class="btn-editar-local">
+   html += `
+     </div>
+
+      ${podeEditar ? `
+      <div class="info-section edit-section">
+        <button id="btn-editar-local" class="btn-editar-local">
         <i class="bi bi-pencil-square"></i> Editar informações deste local
       </button>
-      <p class="edit-hint">Edição liberada para colaborador.</p>
+      <p class="edit-hint">Edição liberada apenas para o colaborador deste local.</p>
       <p id="msg-edicao-local" class="edit-feedback" style="display: none;"></p>
 
       <form id="form-editar-local" class="form-editar-local" style="display: none;">
@@ -556,8 +558,8 @@ function abrirDetalhesLocal(local) {
 
   if (btnEditarLocal) {
     btnEditarLocal.addEventListener('click', () => {
-      if (!colaboradorLogado) {
-        alert('A edição está bloqueada. Faça login como colaborador para continuar.');
+      if (!usuarioLogado || usuarioLogado.localVinculadoId !== local.id) {
+        alert('Acesso negado. Você só pode editar o local ao qual está vinculado.');
         return;
       }
       formEditarLocal.style.display = 'flex';
@@ -649,7 +651,9 @@ function abrirDetalhesLocal(local) {
   document.getElementById('sidebar-titulo').textContent = local.nome;
 
   // Abrir a sidebar
-  abrirSidebar();
+  if(forcarAbertura) {
+    abrirSidebar();
+  }
 }
 
 function atualizarMarcadorLocal(localAtualizado) {
@@ -906,8 +910,8 @@ function fecharModalLogin() {
 }
 
 function atualizarUIColaborador() {
-  if (colaboradorLogado) {
-    btnAbrirLogin.innerHTML = '<i class="bi bi-person-check-fill"></i> Painel do Colaborador';
+  if (usuarioLogado) {
+    btnAbrirLogin.innerHTML = `<i class="bi bi-person-check-fill"></i> ${usuarioLogado.nome}`;
     btnAbrirLogin.style.background = '#198754';
     btnAbrirLogin.style.color = 'white';
     btnLogoutColaborador.style.display = 'inline-flex';
@@ -918,20 +922,32 @@ function atualizarUIColaborador() {
     btnLogoutColaborador.style.display = 'none';
   }
 
+  marcadoresNoMapa.forEach(item => {
+    // É editável se tiver usuário logado E o ID do local dele for igual ao ID deste marcador
+    const isEditable = usuarioLogado !== null && usuarioLogado.localVinculadoId === item.id;
+    
+    // Troca a "roupa" do marcador em tempo real
+    item.marker.setIcon(gerarIconeMarcador(item.tipo, isEditable));
+  });
+
   if (localDetalheAtualId !== null) {
     const localAtual = locaisDeSaude.find(item => item.id === localDetalheAtualId);
-    if (localAtual) abrirDetalhesLocal(localAtual);
+    const sidebarEstaAberta = sidebar.classList.contains('open');
+    if (localAtual) {
+      // Re-renderiza o HTML (para adicionar ou tirar o botão de edição),
+      abrirDetalhesLocal(localAtual, sidebarEstaAberta);
+    }
   }
 }
 
 btnAbrirLogin.addEventListener('click', () => {
-  if (colaboradorLogado) return;
+  if (usuarioLogado) return;
   abrirModalLogin();
 });
 btnFecharLogin.addEventListener('click', fecharModalLogin);
 
 btnLogoutColaborador.addEventListener('click', () => {
-  colaboradorLogado = false;
+  usuarioLogado = false;
   atualizarUIColaborador();
 });
 
@@ -985,8 +1001,10 @@ formLogin.addEventListener('submit', (e) => {
   if (temErro) return;
 
   // 4. Mock de Autenticação (Simulando o Back-End)
-  if (email === credenciaisColaborador.email && senha === credenciaisColaborador.senha) {
-    colaboradorLogado = true;
+  const usuarioEncontrado = listaColaboradores.find(user => user.email === email && user.senha === senha);
+
+  if (usuarioEncontrado) {
+    usuarioLogado = usuarioEncontrado;
     msgServidor.textContent = 'Login realizado com sucesso! Redirecionando...';
     msgServidor.classList.add('msg-success');
     
