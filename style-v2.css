@@ -1,0 +1,873 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #f6f8fb;
+}
+
+/* Header */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,.05);
+}
+.icon-box {
+  width: 50px;
+  height:50px;
+  background: #67a1f2;      /* azul claro */
+  border-radius: 8px;       /* cantos suaves */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-box i {
+  color: #e3eeff;           /* azul Bootstrap */
+  font-size: 26px;
+}
+.icon-box {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;              /* retângulo com cantos suaves */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;             /* centraliza no card */
+}
+/* vermelho */
+.icon-box.red {
+  background: #fde2e2;             /* vermelho claro */
+}
+
+.icon-box.red i {
+  color: #dc3545;                  /* vermelho bootstrap */
+}
+.icon-box.blue {
+  background: #e5eaf6;             /* vermelho claro */
+}
+
+.icon-box.blue i {
+  color: #0d5dd4;                  /* vermelho bootstrap */
+}
+.icon-box.orange {
+  background: #ffe9ce;             /* vermelho claro */
+}
+
+.icon-box.orange i {
+  color: #f09347;                  /* vermelho bootstrap */
+}
+.icon-box.green i {
+  color: #3ea10cf8;                  /* vermelho bootstrap */
+}
+.logo {
+  display: flex;
+  gap: 10px;
+}
+
+.logo h1 {
+  font-size: 20px;
+}
+
+.logo small {
+  color: #777;
+}
+.map-icon-hospital,
+.map-icon-posto,
+.map-icon-upa,
+.map-icon-farmacia{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.map-icon-hospital {
+  background-color: #dc3545; /* vermelho */
+}
+
+.map-icon-posto {
+  background-color: #0d6efd; /* azul */
+}
+
+.map-icon-upa {
+  background-color: #fd7e14; /* laranja */
+}
+.map-icon-farmacia{
+    background-color: #3ea10cf8
+}
+.map-icon-hospital i,
+.map-icon-posto i,
+.map-icon-upa i,
+.map-icon-farmacia i {
+  color: #ffffff;
+  font-size: 24px;
+}
+
+
+.user-btn {
+  background: #00a8e8;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.colab-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logout-btn {
+  background: #6b7280;
+}
+
+/* Cards */
+.stats {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  flex: 1;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,.05);
+}
+
+.card h2 {
+  font-size: 28px;
+}
+
+.card p {
+  color: #666;
+}
+
+.icon {
+  width: 42px;
+  height: 42px;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 20px;
+}
+
+.red { background: #ffe1e1; }
+.blue { background: #e1ecff; }
+.orange { background: #ffe8cc; }
+.green { background: #d3ecdf; }
+
+/* Filtros */
+.filters {
+  display: flex;
+  gap: 10px;
+  padding: 0 20px 10px;
+}
+
+.filters button {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.filters .active {
+  background: #111827;
+  color: white;
+}
+
+/* Mapa */
+#map {
+  height: calc(100vh - 300px);
+  margin: 0 20px 20px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* --- SIDEBAR DE LOCAIS --- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -400px; /* Escondida fora da tela por padrão */
+  width: 100%;
+  max-width: 380px;
+  height: 100vh;
+  background: white;
+  box-shadow: -4px 0 15px rgba(0,0,0,0.1);
+  transition: right 0.3s ease-in-out;
+  z-index: 9999; /* Fica acima do mapa do Leaflet */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Classe que o JS vai adicionar para mostrar a barra */
+.sidebar.open {
+  right: 0; 
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  background: #f6f8fb;
+}
+
+.sidebar-header button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+}
+
+.local-item {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.local-item:hover {
+  background: #f0f4f8;
+}
+
+.local-item h4 {
+  margin-bottom: 6px;
+  font-size: 16px;
+  color: #111827;
+}
+
+.local-item p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.distancia-badge {
+  color: #0d6efd;
+  font-weight: 600;
+}
+
+/* Estado ativo do botão da lista */
+.user-btn.active-btn {
+  background: #111827; /* Cor escura do botão quando clicado */
+}
+
+/* --- OVERLAY (Fundo Sombreado) --- */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998; /* Fica atrás da sidebar (que é 9999) e acima do mapa */
+  
+  /* Escondido por padrão */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Quando o JS adicionar essa classe, a tela escurece */
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.button-locais {
+  padding: 0 20px 10px;
+}
+
+.modo-sidebar {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+#lista-locais {
+  list-style: none;
+  overflow-y: auto; /* Permite rolagem se tiver muitos itens */
+  flex: 1;
+}
+
+/* --- MODAL DE LOGIN --- */
+.login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.85); /* Fundo claro e embaçado */
+  backdrop-filter: blur(5px);
+  z-index: 10000; /* Fica acima de TUDO na tela */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.login-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.login-modal {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  position: relative;
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+}
+
+.login-overlay.open .login-modal {
+  transform: translateY(0);
+}
+
+.btn-close-login {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.login-header h2 {
+  font-size: 24px;
+  color: #111827;
+}
+
+.login-header p {
+  color: #666;
+  font-size: 14px;
+}
+
+/* Campos do formulário */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #0d6efd;
+}
+
+/* Classes de Validação Visual */
+.input-group input.input-error {
+  border-color: #dc3545;
+  background-color: #fff8f8;
+}
+
+.error-msg {
+  display: block;
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+  min-height: 14px; /* Evita que o layout pule ao aparecer o texto */
+}
+
+.mensagem-servidor {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  min-height: 20px;
+}
+.msg-success { color: #198754; }
+.msg-error { color: #dc3545; }
+
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: #111827;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-submit:hover { background: #1f2937; }
+
+/* --- DETALHES DO LOCAL --- */
+.detalhes-container {
+  overflow-y: auto;
+  padding-bottom: 20px;
+}
+
+.local-header {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  background: #f6f8fb;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.local-header .icon-box {
+  width: 50px;
+  height: 50px;
+  margin: 0;
+}
+
+.local-header-info h2 {
+  font-size: 18px;
+  color: #111827;
+  margin: 0 0 4px 0;
+}
+
+.local-header-info p {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+}
+
+.info-section {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.info-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-section h3 i {
+  color: #667;
+  font-size: 16px;
+}
+
+.info-item {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.info-item:last-child {
+  margin-bottom: 0;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.medico-card {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.medico-card:last-child {
+  margin-bottom: 0;
+}
+
+.medico-nome {
+  font-weight: 600;
+  color: #111827;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.medico-info {
+  color: #666;
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.vacina-item {
+  background: white;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vacina-item:last-child {
+  margin-bottom: 0;
+}
+
+.vacina-nome {
+  font-weight: 600;
+  color: #111827;
+  font-size: 14px;
+}
+
+.vacina-badge {
+  background: #111827;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.edit-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-editar-local {
+  border: none;
+  border-radius: 8px;
+  background: #111827;
+  color: #fff;
+  padding: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-editar-local:disabled {
+  background: #b9bec8;
+  cursor: not-allowed;
+}
+
+.edit-hint {
+  margin: 0;
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.edit-feedback {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.edit-feedback.success {
+  background: #e8f7ee;
+  color: #1f7a42;
+  border: 1px solid #b9e6c9;
+}
+
+.form-editar-local {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-editar-local label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-editar-local input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 9px 10px;
+  font-size: 13px;
+  outline: none;
+}
+
+.form-editar-local input:focus {
+  border-color: #111827;
+}
+
+.edit-coords {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.btn-editar-salvar,
+.btn-editar-cancelar {
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  flex: 1;
+}
+
+.btn-editar-salvar {
+  background: #198754;
+  color: #fff;
+}
+
+.btn-editar-cancelar {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.edit-lista-itens {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.medico-edit-row,
+.vacina-edit-row {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #f9fafb;
+}
+
+.btn-adicionar-item {
+  border: 1px dashed #9ca3af;
+  border-radius: 8px;
+  background: #fff;
+  color: #111827;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-remover-item {
+  border: none;
+  border-radius: 6px;
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 6px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.edit-vacina-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #374151;
+}
+
+/* --- ESTILOS DO MARCADOR EDITÁVEL (DESTAQUE NO MAPA) --- */
+.marker-editable-ring {
+  border: 4px solid #ffc107 !important; /* Anel amarelo mais grosso */
+  box-shadow: 0 0 15px rgba(255, 193, 7, 0.6), 0 4px 10px rgba(0,0,0,0.25) !important;
+}
+
+.marker-star-badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: #ffc107;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  border: 2px solid white;
+  z-index: 10;
+}
+/* CONTAINER FARMÁCIA */
+
+.farmacia-container {
+    padding: 10px;
+}
+
+.titulo-farmacia {
+    font-size: 22px;
+    color: #166534;
+    margin-bottom: 5px;
+}
+
+.descricao-farmacia {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+
+/* GRID */
+
+.farmacia-grid {
+    display: grid;
+    gap: 15px;
+}
+
+
+/* CARD */
+
+.farmacia-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+
+/* SELECT */
+
+.farmacia-select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+
+/* RESULTADO */
+
+.resultado-box {
+    margin-top: 10px;
+    background: #f1f5f9;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* --- NOVOS ESTILOS PARA EDIÇÃO DE FARMÁCIA --- */
+
+/* Linha de edição de medicamento/produto */
+.farmacia-edit-row {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 10px;
+    transition: all 0.2s;
+}
+
+.farmacia-edit-row:hover {
+    border-color: #3ea10cf8; /* Verde da farmácia */
+}
+
+/* Inputs de texto dentro da edição */
+.farmacia-edit-row input[type="text"] {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 14px;
+    outline: none;
+}
+
+.farmacia-edit-row input[type="text"]:focus {
+    border-color: #3ea10cf8;
+    box-shadow: 0 0 0 2px rgba(62, 161, 12, 0.1);
+}
+
+/* Checkbox de estoque */
+.edit-check {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #4b5563;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* Botão de adicionar item (tracejado) */
+.btn-add-item {
+    background: #fff;
+    border: 2px dashed #cbd5e1;
+    color: #64748b;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-add-item:hover {
+    background: #f8fafc;
+    border-color: #3ea10cf8;
+    color: #3ea10cf8;
+}
+
+/* Botão de salvar no final da farmácia */
+.btn-submit {
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+
+.btn-submit:hover {
+    filter: brightness(1.1);
+}
