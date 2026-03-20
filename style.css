@@ -739,3 +739,49 @@ body {
   border: 2px solid white;
   z-index: 10;
 }
+
+/* --- RESPONSIVIDADE (MOBILE E TABLET) --- */
+
+/* Ajustes para Tablet e Celulares Médios */
+@media (max-width: 768px) {
+  .stats {
+    flex-direction: column; /* Cards de estatística ficam empilhados */
+    padding: 10px;
+  }
+
+  .filters {
+    flex-wrap: wrap; /* Filtros quebram linha se necessário */
+    justify-content: center;
+  }
+
+  #map {
+    height: 400px; /* Altura fixa menor para o mapa no tablet */
+    margin: 10px;
+  }
+
+  .sidebar {
+    width: 90%; /* Sidebar ocupa quase toda a largura no mobile */
+  }
+}
+
+/* Ajustes para Celulares Pequenos */
+@media (max-width: 480px) {
+  .top-bar {
+    flex-direction: column;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .logo h1 {
+    font-size: 18px;
+  }
+
+  .login-modal {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .btn-submit {
+    padding: 12px; /* Garante que o botão seja fácil de tocar */
+  }
+}
